@@ -17,7 +17,7 @@ self.addEventListener('install', function (event) {
 });
 
 self.addEventListener('activate', function (event) {
-    event.waitUntil(cache.keys().then(function (keys) {
+    event.waitUntil(caches.keys().then(function (keys) {
         // Remove caches whose name is no longer valid
         return Promise.all(
             keys.filter(function (key) {

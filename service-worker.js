@@ -92,6 +92,8 @@ self.addEventListener('fetch', function (event) {
     }).catch(function () {
         // If the request is an image, show an offline placeholder
         if (request.headers.get('Accept').indexOf('image') !== -1) {
+            console.log(request);
+
             return new Response(offlineImage, {
                 headers: {
                     'Content-Type': 'image/svg+xml'

@@ -6,6 +6,8 @@ var urlsToCache = [
     '/stylesheets/github-light.css'
 ];
 
+console.log('here');
+
 self.addEventListener('install', function (event) {
     event.waitUntil(caches.open(CACHE_NAME).then(function (cache) {
         console.log('opened cache');

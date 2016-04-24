@@ -1,7 +1,6 @@
 var CACHE_NAME = 'my-site-cache-v1';
 
 var urlsToCache = [
-    '/service-worker-demo',
     '/service-worker-demo/scripts/app.js',
     '/service-worker-demo/stylesheets/github-light.css'
 ];

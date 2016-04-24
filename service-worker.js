@@ -1,7 +1,7 @@
 var CACHE_NAME = 'my-site-cache-v1';
 
 var urlsToCache = [
-    '/'
+    '/service-worker-demo/'
 ];
 
 self.addEventListener('install', function (event) {

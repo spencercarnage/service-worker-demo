@@ -8,6 +8,8 @@ function updateStaticCache () {
                 '/service-worker-demo/',
                 '/service-worker-demo/offline.html',
                 '/service-worker-demo/stylesheets/github-light.css',
+                '/service-worker-demo/stylesheets/normalize.css',
+                '/service-worker-demo/stylesheets/stylesheet.css',
                 '/service-worker-demo/scripts/app.js'
             ]);
         });
@@ -92,8 +94,6 @@ self.addEventListener('fetch', function (event) {
     }).catch(function () {
         // If the request is an image, show an offline placeholder
         if (request.headers.get('Accept').indexOf('image') !== -1) {
-            console.log(request);
-
             return new Response(offlineImage, {
                 headers: {
                     'Content-Type': 'image/svg+xml'

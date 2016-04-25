@@ -104,6 +104,8 @@ self.addEventListener('fetch', function (event) {
             .then(function (response) {
                 return response || fetch(response)
                     .catch(function () {
+                        console.log(request, response);
+
                         // If the request is an image, show an offline placeholder
                         if (request.headers.get('Accept').indexOf('image') !== -1) {
                             return new Response(offlineImage, {

@@ -39,7 +39,6 @@ self.addEventListener('activate', function (event) {
                     .filter(function (key) {
                         return key.indexOf(VERSION) !== 0;
                     }).map(function (key) {
-                        console.log('delete ', key);
                         return caches.delete(key);
                     })
                 );
@@ -59,7 +58,6 @@ self.addEventListener('fetch', function (event) {
                 })
         );
 
-        console.log('non GET request', request);
         return;
     }
 
@@ -87,21 +85,15 @@ self.addEventListener('fetch', function (event) {
                             cache.put(request, copy);
                         });
 
-                    console.log('response', response);
-
                     return response;
                 })
                 .catch(function () {
-                    console.log('catch 1');
-
                     return caches.match(request)
                         .then(function (response) {
                             return response || caches.match('/service-worker-demo/offline.html');
                         });
                 })
         );
-
-        console.log('request 2', request);
 
         return;
     }
@@ -110,12 +102,8 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(request)
             .then(function (response) {
-                console.log('non html', request, response);
-
                 return response || fetch(request)
                     .catch(function () {
-                        console.log(request, response);
-
                         // If the request is an image, show an offline placeholder
                         if (request.headers.get('Accept').indexOf('image') !== -1) {
                             return new Response(offlineImage, {

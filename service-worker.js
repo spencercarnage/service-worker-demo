@@ -112,7 +112,7 @@ self.addEventListener('fetch', function (event) {
             .then(function (response) {
                 console.log('non html', request, response);
 
-                return response || fetch(response)
+                return response || fetch(request)
                     .catch(function () {
                         console.log(request, response);
 

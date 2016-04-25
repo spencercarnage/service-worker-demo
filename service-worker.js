@@ -110,7 +110,7 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(request)
             .then(function (response) {
-                console.log('non html', response);
+                console.log('non html', request, response);
 
                 return response || fetch(response)
                     .catch(function () {

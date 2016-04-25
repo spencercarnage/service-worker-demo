@@ -1,5 +1,5 @@
 var CACHE_NAME = 'site-cache';
-var VERSION = 'v1::';
+var VERSION = 'v1.1.0';
 
 function updateStaticCache () {
     return caches.open(VERSION + CACHE_NAME)

@@ -77,6 +77,8 @@ self.addEventListener('fetch', function (event) {
                     caches.open(VERSION + CACHE_NAME).then(function (cache) {
                         cache.put(request, copy);
                     });
+
+                    return response;
                 })
                 .catch(function () {
                     return caches.match(request).then(function (response) {

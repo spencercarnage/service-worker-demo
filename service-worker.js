@@ -31,16 +31,19 @@ self.addEventListener('install', function (event) {
 });
 
 self.addEventListener('activate', function (event) {
-    event.waitUntil(caches.keys().then(function (keys) {
-        // Remove caches whose name is no longer valid
-        return Promise.all(
-            keys.filter(function (key) {
-                return key.indexOf(VERSION) !== 0;
-            }).map(function (key) {
-                return caches.delete(key);
+    event.waitUntil(
+        caches.keys()
+            .then(function (keys) {
+                // Remove caches whose name is no longer valid
+                return Promise.all(keys
+                    .filter(function (key) {
+                        return key.indexOf(VERSION) !== 0;
+                    }).map(function (key) {
+                        return caches.delete(key);
+                    })
+                );
             })
-        );
-    }));
+    );
 });
 
 self.addEventListener('fetch', function (event) {
@@ -48,9 +51,12 @@ self.addEventListener('fetch', function (event) {
 
     // Always fetch non-GET requests from the network
     if (request.method !== 'GET') {
-        event.respondWith(fetch(request).catch(function () {
-            return caches.match('/service-worker-demo/offline.html');
-        }));
+        event.respondWith(
+            fetch(request)
+                .catch(function () {
+                    return caches.match('/service-worker-demo/offline.html');
+                })
+        );
 
         return;
     }
@@ -74,16 +80,18 @@ self.addEventListener('fetch', function (event) {
                     // Stash a copy of this page in the cache
                     var copy = response.clone();
 
-                    caches.open(VERSION + CACHE_NAME).then(function (cache) {
-                        cache.put(request, copy);
-                    });
+                    caches.open(VERSION + CACHE_NAME)
+                        .then(function (cache) {
+                            cache.put(request, copy);
+                        });
 
                     return response;
                 })
                 .catch(function () {
-                    return caches.match(request).then(function (response) {
-                        return response || caches.match('/service-worker-demo/offline.html');
-                    });
+                    return caches.match(request)
+                        .then(function (response) {
+                            return response || caches.match('/service-worker-demo/offline.html');
+                        });
                 })
         );
 
@@ -91,17 +99,21 @@ self.addEventListener('fetch', function (event) {
     }
 
     // For non-HTML requests, look in the cache first, fall back to the network
-    event.respondWith(caches.match(request).then(function (response) {
-        return response || fetch(response).catch(function () {
-            // If the request is an image, show an offline placeholder
-            if (request.headers.get('Accept').indexOf('image') !== -1) {
-                return new Response(offlineImage, {
-                    headers: {
-                        'Content-Type': 'image/svg+xml'
-                    }
-                });
-            }
-        });
-    }));
+    event.respondWith(
+        caches.match(request)
+            .then(function (response) {
+                return response || fetch(response)
+                    .catch(function () {
+                        // If the request is an image, show an offline placeholder
+                        if (request.headers.get('Accept').indexOf('image') !== -1) {
+                            return new Response(offlineImage, {
+                                headers: {
+                                    'Content-Type': 'image/svg+xml'
+                                }
+                            });
+                        }
+                    });
+            })
+    );
 
 });

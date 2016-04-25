@@ -92,16 +92,16 @@ self.addEventListener('fetch', function (event) {
 
     // For non-HTML requests, look in the cache first, fall back to the network
     event.respondWith(caches.match(request).then(function (response) {
-        return response || fetch(response);
-    }).catch(function () {
-        // If the request is an image, show an offline placeholder
-        if (request.headers.get('Accept').indexOf('image') !== -1) {
-            return new Response(offlineImage, {
-                headers: {
-                    'Content-Type': 'image/svg+xml'
-                }
-            });
-        }
-    }));
+        return response || fetch(response).catch(function () {
+            // If the request is an image, show an offline placeholder
+            if (request.headers.get('Accept').indexOf('image') !== -1) {
+                return new Response(offlineImage, {
+                    headers: {
+                        'Content-Type': 'image/svg+xml'
+                    }
+                });
+            }
+        });
+    });
 
 });

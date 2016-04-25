@@ -39,6 +39,7 @@ self.addEventListener('activate', function (event) {
                     .filter(function (key) {
                         return key.indexOf(VERSION) !== 0;
                     }).map(function (key) {
+                        console.log('delete ', key);
                         return caches.delete(key);
                     })
                 );
@@ -58,6 +59,7 @@ self.addEventListener('fetch', function (event) {
                 })
         );
 
+        console.log('non GET request', request);
         return;
     }
 
@@ -99,6 +101,8 @@ self.addEventListener('fetch', function (event) {
                 })
         );
 
+        console.log('request 2', request);
+
         return;
     }
 
@@ -106,6 +110,8 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(request)
             .then(function (response) {
+                console.log('non html', response);
+
                 return response || fetch(response)
                     .catch(function () {
                         console.log(request, response);

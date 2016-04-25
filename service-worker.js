@@ -5,7 +5,7 @@ function updateStaticCache () {
     return caches.open(VERSION + CACHE_NAME)
         .then(function (cache) {
             return cache.addAll([
-                '/service-worker-demo/',
+                '/service-worker-demo/index.html',
                 '/service-worker-demo/offline.html',
                 '/service-worker-demo/stylesheets/github-light.css',
                 '/service-worker-demo/stylesheets/normalize.css',

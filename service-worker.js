@@ -85,9 +85,13 @@ self.addEventListener('fetch', function (event) {
                             cache.put(request, copy);
                         });
 
+                    console.log('response', response);
+
                     return response;
                 })
                 .catch(function () {
+                    console.log('catch 1');
+
                     return caches.match(request)
                         .then(function (response) {
                             return response || caches.match('/service-worker-demo/offline.html');
